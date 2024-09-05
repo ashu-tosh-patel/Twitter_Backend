@@ -1,0 +1,45 @@
+spring: 
+  datasource: 
+    driverClassName: com.mysql.cj.jdbc.Driver 
+    url: jdbc:mysql://localhost/TWEET_MEDIA
+    username: root
+    password: root
+  jpa: 
+    hibernate.ddl-auto: update
+  application:
+    name: MEDIA
+#  cloud:
+#    consul:
+#      host: localhost
+#      discovery:
+#        hostname: localhost
+#      config:
+#        enabled: true
+#        prefix: config
+#        defaultContext: application
+#        data-key: data
+#        profileSeperator: '::'
+#        format: YAML
+
+
+server:
+  port: 8081
+  
+
+#cirtuit breaker name in program should be same as instance name here
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      playerService:
+#        failureRateThreshold: 50
+#        ringBufferSizeInHalfOpenState: 3
+#        waitDurationInOpenState: 30s
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+PlayerService: 
+  PLAYER_AGE: Player didn't met the age limit.   
+  SPORT_NOT_ABLE_TO_REGISTER: Player Not Able To Register Due to Phone No.
+  NOT_FOUND: Invalid RegisterId.
+
+API: 
+  REGISTRATION_SUCCESS: Player registered successfully with id
