@@ -45,7 +45,7 @@ public class TweetServiceImpl implements TweetService {
 			List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
 			List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
 			tweetDTO.setId(tweet.getId());
-			tweetDTO.setMediaLink(tweet.getMediaLink());
+//			tweetDTO.setMediaLink(tweet.getMediaLink());
 			tweetDTO.setMentions(mentionedNames);
 			tweetDTO.setMessage(tweet.getMessage());
 			tweetDTO.setUrls(linkUrls);
@@ -68,7 +68,7 @@ public class TweetServiceImpl implements TweetService {
 		List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
 		TweetDTO tweetDTO = new TweetDTO();
 		tweetDTO.setId(tweet.getId());
-		tweetDTO.setMediaLink(tweet.getMediaLink());
+//		tweetDTO.setMediaLink(tweet.getMediaLink());
 		tweetDTO.setMentions(mentionedNames);
 		tweetDTO.setMessage(tweet.getMessage());
 		tweetDTO.setUrls(linkUrls);
@@ -86,7 +86,7 @@ public class TweetServiceImpl implements TweetService {
 		Optional<Tweet> tweetOP = tr.findById(id);
 		Tweet tweet = tweetOP.get();
 		tweet.setId(tweetDTO.getId());
-		tweet.setMediaLink(tweetDTO.getMediaLink());
+//		tweet.setMediaLink(tweetDTO.getMediaLink());
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
 		return tr.save(tweet).getId();
@@ -95,7 +95,7 @@ public class TweetServiceImpl implements TweetService {
 	public Integer add(TweetDTO tweetDTO) {
 		Tweet tweet = new Tweet();
 		tweet.setId(tweetDTO.getId());
-		tweet.setMediaLink(tweetDTO.getMediaLink());
+//		tweet.setMediaLink(tweetDTO.getMediaLink());
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
 		Tweet saved = tr.save(tweet);

@@ -8,11 +8,11 @@ spring:
     hibernate.ddl-auto: update
   application:
     name: MEDIA
-#  cloud:
-#    consul:
-#      host: localhost
-#      discovery:
-#        hostname: localhost
+  cloud:
+    consul:
+      host: localhost
+      discovery:
+        hostname: localhost
 #      config:
 #        enabled: true
 #        prefix: config

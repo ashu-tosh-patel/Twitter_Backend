@@ -31,7 +31,7 @@ public class FollowingAndFollowerController {
 	}
 
 	@GetMapping(value = "follow/{followedById}/{followedToId}")
-	public ResponseEntity<Integer> addFollower(Integer followedById, Integer followedToId) {
+	public ResponseEntity<Integer> addFollower(@PathVariable Integer followedById, @PathVariable Integer followedToId) {
 		Integer id = ffs.follow(followedById, followedToId);
 		return new ResponseEntity<>(id, HttpStatus.CREATED);
 	}

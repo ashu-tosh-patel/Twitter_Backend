@@ -13,13 +13,13 @@ spring:
       host: localhost
       discovery:
         hostname: localhost
-      config:
-        enabled: true
-        prefix: config
-        defaultContext: application
-        data-key: data
-        profileSeperator: '::'
-        format: YAML
+#      config:
+#        enabled: true
+#        prefix: config
+#        defaultContext: application
+#        data-key: data
+#        profileSeperator: '::'
+#        format: YAML
 
 
 server:

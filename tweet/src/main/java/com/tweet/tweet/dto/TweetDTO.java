@@ -7,11 +7,19 @@ public class TweetDTO {
 	private Integer id;
 	private Integer userId;
 	private String message;
-	private String mediaLink;
+	private MediaDTO media;
 	private LocalDateTime createdAt;
 	List<String> hashtags;
 	List<String> mentions;
 	List<String> urls;
+
+	public MediaDTO getMedia() {
+		return media;
+	}
+
+	public void setMedia(MediaDTO media) {
+		this.media = media;
+	}
 
 	public Integer getId() {
 		return id;
@@ -43,14 +51,6 @@ public class TweetDTO {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public String getMediaLink() {
-		return mediaLink;
-	}
-
-	public void setMediaLink(String mediaLink) {
-		this.mediaLink = mediaLink;
 	}
 
 	public List<String> getHashtags() {
