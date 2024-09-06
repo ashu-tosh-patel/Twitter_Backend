@@ -1,8 +1,6 @@
-package com.tweet.user.utility;
+package com.tweet.seachAndDIscovery.utility;
 
 import java.util.stream.Collectors;
-
-//import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,21 +13,23 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.tweet.user.exception.UserException;
+import com.tweet.seachAndDIscovery.exception.SearchAndDiscoveryException;
+//import com.tweet.user.exception.UserException;
+//import com.tweet.user.utility.ErrorInfo;
+//import com.tweet.user.utility.ExceptionControllerAdvice;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
-	
 	private static final Log LOGGER = LogFactory.getLog(ExceptionControllerAdvice.class);
 	
 	@Autowired
 	private Environment environment;
 	
-	@ExceptionHandler(UserException.class)
-	public ResponseEntity<ErrorInfo> UserExceptionHandler(UserException exception) {
+	@ExceptionHandler(SearchAndDiscoveryException.class)
+	public ResponseEntity<ErrorInfo> UserExceptionHandler(SearchAndDiscoveryException exception) {
 		LOGGER.error(exception.getMessage(), exception);
 		ErrorInfo errorInfo = new ErrorInfo();
 		errorInfo.setErrorCode(HttpStatus.NOT_FOUND.value());
