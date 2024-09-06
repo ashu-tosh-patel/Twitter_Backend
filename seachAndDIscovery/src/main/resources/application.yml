@@ -21,6 +21,5 @@ General:
   EXCEPTION_MESSAGE: Request could not be processed due to some issue. Please try again!
 
 Service: 
-  USER_ALREADY_EXISTS : User already Exists with this email_id
-  INCORRECT_CREDENTIALS : Your credentials are incorrect please enter valid credentials
-  USER_NOT_FOUND : Any such user doesn't exist.
+  NO_USERS_FOUND : No User Found
+  NO_TWEETS_FOUND : No Tweets Found

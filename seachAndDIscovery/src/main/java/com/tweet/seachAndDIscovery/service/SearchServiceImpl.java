@@ -31,8 +31,21 @@ public class SearchServiceImpl implements SearchService {
 	public List<TweetDTO> filterListOfTweets(List<TweetDTO> tweets,String text){
 		List<TweetDTO> list = new ArrayList<>();
 		
-		list = tweets.stream().filter(
-				(x) -> x.getMessage().contains(text) || x.getHashtags().contains(text)).toList();
+		for(int i = 0;i < tweets.size();i++) {
+			TweetDTO tweetDTO = tweets.get(i);
+			if(tweetDTO.getMessage().contains(text)) {
+				list.add(tweetDTO);
+			}else if(tweetDTO.getHashtags().size() >= 1) {
+				for(int j = 0;j < tweetDTO.getHashtags().size();j++) {
+					if(tweetDTO.getHashtags().get(j).contains(text)) {
+						list.add(tweetDTO);
+						break;
+					}
+				}
+			}
+		}
+//		list = tweets.stream().filter(
+//				(x) -> x.getMessage().contains(text) || x.getHashtags().contains(text)).toList();
 		
 		return list;
 	}

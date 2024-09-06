@@ -40,7 +40,7 @@ public class SearchApi {
 		List<UserDTO> list = searchService.filterList(allUsersList, text);
 		
 		if(list.isEmpty()) {
-			throw new SearchAndDiscoveryException("No user found");
+			throw new SearchAndDiscoveryException("Service.NO_USERS_FOUND");
 		}
 		
 		return new ResponseEntity<>(list,HttpStatus.OK);
@@ -56,7 +56,7 @@ public class SearchApi {
 		List<TweetDTO> list = searchService.filterListOfTweets(allTweetsList, text);
 		
 		if(list.isEmpty()) {
-			throw new SearchAndDiscoveryException("No tweets found");
+			throw new SearchAndDiscoveryException("Service.NO_TWEETS_FOUND");
 		}
 		
 		return new ResponseEntity<>(list,HttpStatus.OK);
