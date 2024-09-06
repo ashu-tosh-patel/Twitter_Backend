@@ -1,7 +1,7 @@
 spring: 
   datasource: 
     driverClassName: com.mysql.cj.jdbc.Driver 
-    url: jdbc:mysql://localhost/TWEET_TWEET
+    url: jdbc:mysql://localhost/TWEETDB
     username: root
     password: root
   jpa: 

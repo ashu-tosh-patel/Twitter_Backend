@@ -1,4 +1,4 @@
-package com.tweet.user.utility;
+package com.tweet.seachAndDIscovery.utility;
 
 public class ErrorInfo {
 	private String errorMessage;

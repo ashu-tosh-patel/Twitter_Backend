@@ -1,0 +1,26 @@
+server:
+  port: 8765
+spring: 
+  application:
+    name: UserMS
+  cloud:
+    consul:
+      host: localhost
+      discovery:
+        hostname: localhost  
+  datasource: 
+    driverClassName: com.mysql.cj.jdbc.Driver 
+    url: jdbc:mysql://localhost/userMS_db
+    username: root
+    password: root
+  jpa: 
+    hibernate.ddl-auto: update
+    
+    
+General: 
+  EXCEPTION_MESSAGE: Request could not be processed due to some issue. Please try again!
+
+Service: 
+  USER_ALREADY_EXISTS : User already Exists with this email_id
+  INCORRECT_CREDENTIALS : Your credentials are incorrect please enter valid credentials
+  USER_NOT_FOUND : Any such user doesn't exist.
