@@ -25,10 +25,6 @@ public class SearchServiceImpl implements SearchService {
 				(x) -> x.getUsername().contains(text) || x.getName().contains(text) || x.getBio().contains(text))
 				.toList();
 
-//		if (list.isEmpty()) {
-//			throw new SearchAndDiscoveryException("No User Found");
-//		}
-
 		return list;
 	}
 	

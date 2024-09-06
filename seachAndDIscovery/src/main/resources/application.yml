@@ -7,7 +7,12 @@ spring:
     consul:
       host: localhost
       discovery:
-        hostname: localhost  
+        hostname: localhost
+  datasource: 
+    driverClassName: com.mysql.cj.jdbc.Driver 
+    url: jdbc:mysql://localhost/SEARCHDB
+    username: root
+    password: root      
   jpa: 
     hibernate.ddl-auto: update
     

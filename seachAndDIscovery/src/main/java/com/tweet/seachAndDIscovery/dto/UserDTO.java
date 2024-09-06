@@ -1,21 +1,14 @@
 package com.tweet.seachAndDIscovery.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+//import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class UserDTO {
 	private Integer id;
-	@NotEmpty(message="{user.name.invalid}")
-	@Pattern(regexp="[A-Z][A-Za-z]+( [A-Z][A-Za-z]+)*",message="{user.name.validation}")
 	private String name;
 	private String username;
-	@NotEmpty(message="{user.email.invalid}")
-	@Pattern(regexp="[a-z._0-9]+[@][a-z]+[.](com|org|in)",message="{user.email.validation}")
 	private String email;
-	@NotEmpty(message="{user.password.invalid}")
-	@Pattern(regexp="[A-Za-z0-9!@_]+",message="{user.password.validation}")
-	@Size(min=8,max=16,message="{user.password.length}")
 	private String password;
 	private String profilePic;
 	private String coverPic;
