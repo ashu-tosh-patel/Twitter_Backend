@@ -17,7 +17,7 @@ public class Tweet {
 	private Integer id;
 	private Integer userId;
 	private String message;
-	private String mediaLink;
+//	private String mediaLink;
 	private LocalDateTime createdAt;
 
 	public LocalDateTime getCreatedAt() {
@@ -52,13 +52,13 @@ public class Tweet {
 		this.message = message;
 	}
 
-	public String getMediaLink() {
-		return mediaLink;
-	}
-
-	public void setMediaLink(String mediaLink) {
-		this.mediaLink = mediaLink;
-	}
+//	public String getMediaLink() {
+//		return mediaLink;
+//	}
+//
+//	public void setMediaLink(String mediaLink) {
+//		this.mediaLink = mediaLink;
+//	}
 
 //	public List<String> getHashtags() {
 //		return hashtags;

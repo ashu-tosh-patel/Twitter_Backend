@@ -961,3 +961,94 @@ com.tweet.seachAndDIscovery.exception.SearchAndDiscoveryException: Service.NO_TW
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
 	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
 06-Sep-2024 12:23:28 WARN - Resolved [com.tweet.seachAndDIscovery.exception.SearchAndDiscoveryException: Service.NO_TWEETS_FOUND]
+06-Sep-2024 12:38:13 INFO - Restarting due to 3 class path changes (0 additions, 2 deletions, 1 modification)
+06-Sep-2024 12:38:13 INFO - Stopping ProtocolHandler ["http-nio-8760"]
+06-Sep-2024 12:38:13 INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
+06-Sep-2024 12:38:13 INFO - HikariPool-12 - Shutdown initiated...
+06-Sep-2024 12:38:13 INFO - HikariPool-12 - Shutdown completed.
+06-Sep-2024 12:38:13 INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+06-Sep-2024 12:38:13 INFO - Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+06-Sep-2024 12:38:14 INFO - Tomcat initialized with port 8760 (http)
+06-Sep-2024 12:38:14 INFO - Initializing ProtocolHandler ["http-nio-8760"]
+06-Sep-2024 12:38:14 INFO - Starting service [Tomcat]
+06-Sep-2024 12:38:14 INFO - Starting Servlet engine: [Apache Tomcat/10.1.28]
+06-Sep-2024 12:38:14 INFO - Initializing Spring embedded WebApplicationContext
+06-Sep-2024 12:38:14 INFO - Root WebApplicationContext: initialization completed in 526 ms
+06-Sep-2024 12:38:14 INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+06-Sep-2024 12:38:14 INFO - HHH000026: Second-level cache disabled
+06-Sep-2024 12:38:14 INFO - No LoadTimeWeaver setup: ignoring JPA class transformer
+06-Sep-2024 12:38:14 INFO - HikariPool-13 - Starting...
+06-Sep-2024 12:38:14 INFO - HikariPool-13 - Added connection com.mysql.cj.jdbc.ConnectionImpl@43f7f694
+06-Sep-2024 12:38:14 INFO - HikariPool-13 - Start completed.
+06-Sep-2024 12:38:14 INFO - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+06-Sep-2024 12:38:14 INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+06-Sep-2024 12:38:14 WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'searchApi' defined in file [C:\Users\sachin.arora05\Desktop\Twitter_Application\group-10-backend\seachAndDIscovery\target\classes\com\tweet\seachAndDIscovery\api\SearchApi.class]: Failed to instantiate [com.tweet.seachAndDIscovery.api.SearchApi]: Constructor threw exception
+06-Sep-2024 12:38:14 INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
+06-Sep-2024 12:38:14 INFO - HikariPool-13 - Shutdown initiated...
+06-Sep-2024 12:38:14 INFO - HikariPool-13 - Shutdown completed.
+06-Sep-2024 12:38:14 INFO - Stopping service [Tomcat]
+06-Sep-2024 12:38:14 INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+06-Sep-2024 12:38:14 ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'searchApi' defined in file [C:\Users\sachin.arora05\Desktop\Twitter_Application\group-10-backend\seachAndDIscovery\target\classes\com\tweet\seachAndDIscovery\api\SearchApi.class]: Failed to instantiate [com.tweet.seachAndDIscovery.api.SearchApi]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) [spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) [spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) [spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) [spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) [spring-boot-3.3.3.jar:3.3.3]
+	at com.tweet.seachAndDIscovery.SeachAndDIscoveryApplication.main(SeachAndDIscoveryApplication.java:15) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.3.3.jar:3.3.3]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.tweet.seachAndDIscovery.api.SearchApi]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:221) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:94) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 20 more
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	Syntax error on tokens, delete these tokens
+	Syntax error, insert "}" to complete ClassBody
+
+	at com.tweet.seachAndDIscovery.api.SearchApi.<init>(SearchApi.java:1) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[?:?]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[?:?]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:195) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:94) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1331) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 20 more
+06-Sep-2024 12:40:53 INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+06-Sep-2024 12:40:53 INFO - Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+06-Sep-2024 12:40:54 INFO - Tomcat initialized with port 8760 (http)
+06-Sep-2024 12:40:54 INFO - Initializing ProtocolHandler ["http-nio-8760"]
+06-Sep-2024 12:40:54 INFO - Starting service [Tomcat]
+06-Sep-2024 12:40:54 INFO - Starting Servlet engine: [Apache Tomcat/10.1.28]
+06-Sep-2024 12:40:54 INFO - Initializing Spring embedded WebApplicationContext
+06-Sep-2024 12:40:54 INFO - Root WebApplicationContext: initialization completed in 545 ms
+06-Sep-2024 12:40:54 INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+06-Sep-2024 12:40:54 INFO - HHH000026: Second-level cache disabled
+06-Sep-2024 12:40:54 INFO - No LoadTimeWeaver setup: ignoring JPA class transformer
+06-Sep-2024 12:40:54 INFO - HikariPool-14 - Starting...
+06-Sep-2024 12:40:54 INFO - HikariPool-14 - Added connection com.mysql.cj.jdbc.ConnectionImpl@79e65655
+06-Sep-2024 12:40:54 INFO - HikariPool-14 - Start completed.
+06-Sep-2024 12:40:54 INFO - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+06-Sep-2024 12:40:54 INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+06-Sep-2024 12:40:54 WARN - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+06-Sep-2024 12:40:55 WARN - Unable to start LiveReload server
+06-Sep-2024 12:40:55 INFO - Exposing 1 endpoint beneath base path '/actuator'
+06-Sep-2024 12:40:55 INFO - Starting ProtocolHandler ["http-nio-8760"]
+06-Sep-2024 12:40:55 INFO - Tomcat started on port 8760 (http) with context path '/'
+06-Sep-2024 12:40:55 INFO - Condition evaluation unchanged

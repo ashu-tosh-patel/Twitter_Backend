@@ -1,13 +1,13 @@
 spring: 
   datasource: 
     driverClassName: com.mysql.cj.jdbc.Driver 
-    url: jdbc:mysql://localhost/TWEET_MEDIA
+    url: jdbc:mysql://localhost/TWEET_FOLLOWING_AND_FOLLOWER
     username: root
     password: root
   jpa: 
     hibernate.ddl-auto: update
   application:
-    name: MEDIA
+    name: FOLLOWINGANDFOLLOWER
   cloud:
     consul:
       host: localhost
@@ -23,7 +23,7 @@ spring:
 
 
 server:
-  port: 8081
+  port: 8082
   
 
 #cirtuit breaker name in program should be same as instance name here

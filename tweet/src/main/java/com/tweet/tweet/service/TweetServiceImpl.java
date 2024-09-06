@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tweet.tweet.dto.MediaDTO;
 import com.tweet.tweet.dto.TweetDTO;
 import com.tweet.tweet.entity.HashTag;
 import com.tweet.tweet.entity.Link;
@@ -45,7 +46,7 @@ public class TweetServiceImpl implements TweetService {
 			List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
 			List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
 			tweetDTO.setId(tweet.getId());
-			tweetDTO.setMediaLink(tweet.getMediaLink());
+//			tweetDTO.setMediaLink(tweet.getMediaLink());
 			tweetDTO.setMentions(mentionedNames);
 			tweetDTO.setMessage(tweet.getMessage());
 			tweetDTO.setUrls(linkUrls);
@@ -68,13 +69,13 @@ public class TweetServiceImpl implements TweetService {
 		List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
 		TweetDTO tweetDTO = new TweetDTO();
 		tweetDTO.setId(tweet.getId());
-		tweetDTO.setMediaLink(tweet.getMediaLink());
+//		tweetDTO.setMediaLink(tweet.getMediaLink());
 		tweetDTO.setMentions(mentionedNames);
 		tweetDTO.setMessage(tweet.getMessage());
 		tweetDTO.setUrls(linkUrls);
 		tweetDTO.setHashtags(tags);
 		tweetDTO.setUserId(tweet.getUserId());
-		tweetDTO.setUserId(tweet.getUserId());
+//		tweetDTO.setUserId(tweet.getUserId());
 		return tweetDTO;
 	}
 
@@ -86,7 +87,7 @@ public class TweetServiceImpl implements TweetService {
 		Optional<Tweet> tweetOP = tr.findById(id);
 		Tweet tweet = tweetOP.get();
 		tweet.setId(tweetDTO.getId());
-		tweet.setMediaLink(tweetDTO.getMediaLink());
+//		tweet.setMediaLink(tweetDTO.getMediaLink());
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
 		return tr.save(tweet).getId();
@@ -95,7 +96,7 @@ public class TweetServiceImpl implements TweetService {
 	public Integer add(TweetDTO tweetDTO) {
 		Tweet tweet = new Tweet();
 		tweet.setId(tweetDTO.getId());
-		tweet.setMediaLink(tweetDTO.getMediaLink());
+//		tweet.setMediaLink(tweetDTO.getMediaLink());
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
 		Tweet saved = tr.save(tweet);
