@@ -29,4 +29,10 @@ public class FollowingAndFollowerController {
 	public ResponseEntity<List<Integer>> getFollowing(@PathVariable Integer userId) {
 		return new ResponseEntity<>(ffs.getFollowing(userId), HttpStatus.OK);
 	}
+
+	@GetMapping(value = "follow/{followedById}/{followedToId}")
+	public ResponseEntity<Integer> addFollower(Integer followedById, Integer followedToId) {
+		Integer id = ffs.follow(followedById, followedToId);
+		return new ResponseEntity<>(id, HttpStatus.CREATED);
+	}
 }
