@@ -1,5 +1,6 @@
 package com.tweet.seachAndDIscovery.api;
 
+import com.tweet.seachAndDIscovery.dto.*;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,7 @@ public class SearchApi {
 	@GetMapping(value="/searchUsers/{text}")
 	public ResponseEntity<List<UserDTO>> searchUsers(@PathVariable String text)throws SearchAndDiscoveryException{
 		
-		UserDTO allUsersList = webClientBuilder.build().get().uri("http://localhost:8765/users/getAllUsersDetails","")
-				.retrieve().bodyToMono(UserDTO.class).block();
+		List<UserDTO> allUsersList = webClientBuilder.build().get().uri("http://localhost:8765/users/getAllUsersDetails").retrieve().bodyToMono(List<UserDTO>.class).block();
 		//Have to fetch all users data from UserMS
 		List<UserDTO> list = searchService.filterList(allUsersList, text);
 		
@@ -45,20 +45,20 @@ public class SearchApi {
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/searchTweets/{text}")
-	public ResponseEntity<List<TweetDTO>> searchTweets(@PathVariable String text)throws SearchAndDiscoveryException{
-		
-	    TweetDTO allTweetsList =  webClientBuilder.build().get()
-				.uri("http://localhost:8080/tweet-api/tweet")
-				.retrieve().bodyToMono(TweetDTO.class).block();
-		
-		List<TweetDTO> list = searchService.filterListOfTweets(allTweetsList, text);
-		
-		if(list.isEmpty()) {
-			throw new SearchAndDiscoveryException("No tweets found");
-		}
-		
-		return new ResponseEntity<>(list,HttpStatus.OK);
-	}
+//	@GetMapping(value="/searchTweets/{text}")
+//	public ResponseEntity<List<TweetDTO>> searchTweets(@PathVariable String text)throws SearchAndDiscoveryException{
+//		
+//	    TweetDTO allTweetsList =  webClientBuilder.build().get()
+//				.uri("http://localhost:8080/tweet-api/tweet")
+//				.retrieve().bodyToMono(TweetDTO.class).block();
+//		
+//		List<TweetDTO> list = searchService.filterListOfTweets(allTweetsList, text);
+//		
+//		if(list.isEmpty()) {
+//			throw new SearchAndDiscoveryException("No tweets found");
+//		}
+//		
+//		return new ResponseEntity<>(list,HttpStatus.OK);
+//	}
 	
 }
