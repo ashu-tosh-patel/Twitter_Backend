@@ -58,25 +58,30 @@ public class TweetServiceImpl implements TweetService {
 		return tweetDTOs;
 	}
 
-	public TweetDTO findById(Integer id) {
-		Optional<Tweet> tweetOP = tr.findById(id);
-		Tweet tweet = tweetOP.get();
-		List<Mention> mentions = mr.findByTweetId(tweet.getId());
-		List<String> mentionedNames = mentions.stream().map((m) -> m.getUserName()).collect(Collectors.toList());
-		List<Link> links = lr.findByTweetId(tweet.getId());
-		List<String> linkUrls = links.stream().map(Link::getUrl).collect(Collectors.toList());
-		List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
-		List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
-		TweetDTO tweetDTO = new TweetDTO();
-		tweetDTO.setId(tweet.getId());
+	public List<TweetDTO> findByUserId(Integer userId) {
+		List<Tweet> tweets = tr.findByUserId(userId);
+//		List<Tweet> tweet = tweetOP.get();
+		List<TweetDTO> tweetDTOs = new ArrayList<>();
+		for (Tweet tweet : tweets) {
+			List<Mention> mentions = mr.findByTweetId(tweet.getId());
+			List<String> mentionedNames = mentions.stream().map((m) -> m.getUserName()).collect(Collectors.toList());
+			List<Link> links = lr.findByTweetId(tweet.getId());
+			List<String> linkUrls = links.stream().map(Link::getUrl).collect(Collectors.toList());
+			List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
+			List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
+			TweetDTO tweetDTO = new TweetDTO();
+			tweetDTO.setId(tweet.getId());
 //		tweetDTO.setMediaLink(tweet.getMediaLink());
-		tweetDTO.setMentions(mentionedNames);
-		tweetDTO.setMessage(tweet.getMessage());
-		tweetDTO.setUrls(linkUrls);
-		tweetDTO.setHashtags(tags);
-		tweetDTO.setUserId(tweet.getUserId());
+			tweetDTO.setMentions(mentionedNames);
+			tweetDTO.setMessage(tweet.getMessage());
+			tweetDTO.setUrls(linkUrls);
+			tweetDTO.setHashtags(tags);
+			tweetDTO.setUserId(tweet.getUserId());
 //		tweetDTO.setUserId(tweet.getUserId());
-		return tweetDTO;
+			tweetDTO.setCreatedAt(tweet.getCreatedAt());
+			tweetDTOs.add(tweetDTO);
+		}
+		return tweetDTOs;
 	}
 
 	public void deleteById(Integer id) {

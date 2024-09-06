@@ -2,6 +2,7 @@ package com.tweet.media.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +18,20 @@ public class MediaServiceImpl implements MediaService {
 	MediaRepository mr;
 
 	@Override
-	public List<MediaDTO> findByTweetId(Integer tweetId) {
-		List<Media> medias = mr.findByTweetId(tweetId);
-		List<MediaDTO> mediaDTOs = new ArrayList<>();
-		for (Media media : medias) {
-			MediaDTO mediaDTO = new MediaDTO();
-			mediaDTO.setId(media.getId());
-			mediaDTO.setMediaType(media.getMediaType());
-			mediaDTO.setTweetId(media.getTweetId());
-			mediaDTO.setUrl(media.getUrl());
-			mediaDTOs.add(mediaDTO);
+	public MediaDTO findByTweetId(Integer tweetId) {
+		Optional<Media> mediaOP = mr.findByTweetId(tweetId);
+		if (!mediaOP.isPresent()) {
+			MediaDTO dum = new MediaDTO();
+			dum.setUrl("No media for this tweet");
+			return dum;
 		}
-		return mediaDTOs;
+		Media media = mediaOP.get();
+		MediaDTO mediaDTO = new MediaDTO();
+		mediaDTO.setId(media.getId());
+		mediaDTO.setMediaType(media.getMediaType());
+		mediaDTO.setTweetId(media.getTweetId());
+		mediaDTO.setUrl(media.getUrl());
+		return mediaDTO;
 	}
 
 	@Override

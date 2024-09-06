@@ -1,5 +1,6 @@
 package com.tweet.tweet.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import com.tweet.tweet.service.TweetService;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/tweet-api")
+@RequestMapping(value = "/tweet-api/user")
 public class TweetController {
 
 	@Autowired
@@ -34,31 +35,43 @@ public class TweetController {
 	@GetMapping(value = "/tweet")
 	public ResponseEntity<List<TweetDTO>> getAllTweets() {
 		List<TweetDTO> tweetDTOs = ts.find();
+		for (int i = 0; i < tweetDTOs.size(); i++) {
+			MediaDTO mediaDTO = webBuilder.build().get()
+					.uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
+					.bodyToMono(MediaDTO.class).block();
+			tweetDTOs.get(i).setMedia(mediaDTO);
+		}
 		return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/tweet/{id}")
-	public ResponseEntity<TweetDTO> getById(@PathVariable Integer id) {
-		TweetDTO tweetDTO = ts.findById(id);
-		MediaDTO mediaDTO = webBuilder.build().get().uri("http://localhost:8081/media-api/media/" + tweetDTO.getId())
-				.retrieve().bodyToMono(MediaDTO.class).block();
-		System.out.println(mediaDTO);
-		tweetDTO.setMedia(mediaDTO);
-		return new ResponseEntity<>(tweetDTO, HttpStatus.OK);
+	@GetMapping(value = "{userId}/tweet")
+	public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) {
+		List<TweetDTO> tweetDTOs = ts.findByUserId(userId);
+
+		for (int i = 0; i < tweetDTOs.size(); i++) {
+			MediaDTO mediaDTO = webBuilder.build().get()
+					.uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
+					.bodyToMono(MediaDTO.class).block();
+//		System.out.println(mediaDTO);
+			tweetDTOs.get(i).setMedia(mediaDTO);
+
+		}
+		return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/tweet")
-	public ResponseEntity<Integer> add(@RequestBody TweetDTO tweetDTO) {
+	@PostMapping(value = "{userId}/tweet")
+	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO) {
 		return new ResponseEntity<>(ts.add(tweetDTO), HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/tweet/{id}")
-	public ResponseEntity<Integer> update(@PathVariable Integer id, @RequestBody TweetDTO tweetDTO) {
+	@PutMapping(value = "{userId}/tweet/{id}")
+	public ResponseEntity<Integer> update(@PathVariable Integer userId, @PathVariable Integer id,
+			@RequestBody TweetDTO tweetDTO) {
 		return new ResponseEntity<>(ts.update(tweetDTO, id), HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping(value = "/tweet/{id}")
-	public ResponseEntity delete(@PathVariable Integer id) {
+	@DeleteMapping(value = "{userId}/tweet/{id}")
+	public ResponseEntity delete(@PathVariable Integer userId, @PathVariable Integer id) {
 		ts.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}

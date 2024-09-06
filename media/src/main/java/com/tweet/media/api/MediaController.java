@@ -25,7 +25,7 @@ public class MediaController {
 	private MediaService ms;
 
 	@GetMapping(value = "/media/{tweetId}")
-	public ResponseEntity<List<MediaDTO>> findByTweetId(@PathVariable Integer tweetId) {
+	public ResponseEntity<MediaDTO> findByTweetId(@PathVariable Integer tweetId) {
 		return new ResponseEntity<>(ms.findByTweetId(tweetId), HttpStatus.OK);
 	}
 

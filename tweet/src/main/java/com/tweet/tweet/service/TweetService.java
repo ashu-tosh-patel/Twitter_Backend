@@ -9,7 +9,7 @@ import com.tweet.tweet.entity.Tweet;
 public interface TweetService {
 	public List<TweetDTO> find();
 
-	public TweetDTO findById(Integer id);
+	public List<TweetDTO> findByUserId(Integer id);
 
 	public void deleteById(Integer id);
 
