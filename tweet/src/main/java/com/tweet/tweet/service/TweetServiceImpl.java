@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tweet.tweet.dto.MediaDTO;
 import com.tweet.tweet.dto.TweetDTO;
 import com.tweet.tweet.entity.HashTag;
 import com.tweet.tweet.entity.Link;
@@ -74,7 +75,7 @@ public class TweetServiceImpl implements TweetService {
 		tweetDTO.setUrls(linkUrls);
 		tweetDTO.setHashtags(tags);
 		tweetDTO.setUserId(tweet.getUserId());
-		tweetDTO.setUserId(tweet.getUserId());
+//		tweetDTO.setUserId(tweet.getUserId());
 		return tweetDTO;
 	}
 

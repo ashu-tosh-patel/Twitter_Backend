@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class FollowingAndFollowerController {
 		return new ResponseEntity<>(ffs.getFollowing(userId), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "follow/{followedById}/{followedToId}")
+	@PostMapping(value = "follow/{followedById}/{followedToId}")
 	public ResponseEntity<Integer> addFollower(@PathVariable Integer followedById, @PathVariable Integer followedToId) {
 		Integer id = ffs.follow(followedById, followedToId);
 		return new ResponseEntity<>(id, HttpStatus.CREATED);

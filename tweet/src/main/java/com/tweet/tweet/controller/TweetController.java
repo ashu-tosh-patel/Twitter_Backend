@@ -40,7 +40,10 @@ public class TweetController {
 	@GetMapping(value = "/tweet/{id}")
 	public ResponseEntity<TweetDTO> getById(@PathVariable Integer id) {
 		TweetDTO tweetDTO = ts.findById(id);
-//		MediaDTO mediaDTO = webBuilder.build().get().uri("http:")
+		MediaDTO mediaDTO = webBuilder.build().get().uri("http://localhost:8081/media-api/media/" + tweetDTO.getId())
+				.retrieve().bodyToMono(MediaDTO.class).block();
+		System.out.println(mediaDTO);
+		tweetDTO.setMedia(mediaDTO);
 		return new ResponseEntity<>(tweetDTO, HttpStatus.OK);
 	}
 
