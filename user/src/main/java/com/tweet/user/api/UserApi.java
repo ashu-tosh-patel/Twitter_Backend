@@ -1,8 +1,10 @@
 package com.tweet.user.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 //import org.apache.http.HttpStatus;
@@ -13,10 +15,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import com.tweet.user.dto.TweetDTO;
 import com.tweet.user.dto.UserDTO;
 //import com.tweet.user.entity.User;
 import com.tweet.user.exception.UserException;
@@ -37,6 +42,8 @@ public class UserApi {
 	private Environment environment;
 	
 //	private WebClient webClient = WebClient.build();
+	@Autowired
+	private WebClient.Builder webClientBuilder;
 	
 //	User Registration
 	@PostMapping(value = "/userRegistration")
@@ -66,7 +73,7 @@ public class UserApi {
 	}
 	
 //	Updating User Profile
-	@PostMapping(value="/updateProfile")
+	@PutMapping(value="/updateProfile")
 	public ResponseEntity<String> updateUserProfile(@RequestBody UserDTO userDTO){
 		//No verification since User can only change profile after being logged in
 		userService.updateUserProfile(userDTO);
@@ -84,14 +91,31 @@ public class UserApi {
 			throw new UserException("Service.USER_NOT_FOUND");
 		}
 		UserDTO userDTO = userService.getUserDetails(email);
-		// Fetch Details of Tweets & Retweets Of User
-		// Fetch Media of Respective Tweets should be there on there profile page
+		// Fetch Tweets and related media of particular user
+		List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
+				.uri("http://localhost:8080/tweet-api/user/{userId}/tweet",userDTO.getId()).retrieve()
+				.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {}).block();
+		userDTO.setTweetDTOs(tweetDTOs);
 		return new ResponseEntity<>(userDTO,HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/getAllUsersDetails")
 	public ResponseEntity<List<UserDTO>> getAllUsersDetails(){
 		List<UserDTO> list = userService.getAllUsersInfo();
-		return new ResponseEntity<>(list,HttpStatus.OK);
+		List<UserDTO> res = new ArrayList<>();
+		for(int i = 0;i < list.size();i++) {
+			String email = list.get(i).getEmail();
+			System.out.println(email);
+			UserDTO userDTO = userService.getUserDetails(email);
+//			System.out.println(userDTO);
+			// Fetch Tweets and related media of particular user
+			List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
+					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet",userDTO.getId()).retrieve()
+					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {}).block();
+//			System.out.println(tweetDTOs.toString());
+			userDTO.setTweetDTOs(tweetDTOs);
+			res.add(userDTO);
+		}
+		return new ResponseEntity<>(res,HttpStatus.OK);
 	}
 }

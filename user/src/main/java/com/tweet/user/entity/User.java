@@ -2,6 +2,8 @@ package com.tweet.user.entity;
 
 import java.util.List;
 
+import com.tweet.user.dto.TweetDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class User {
 	private String bio;
 	private String location;
 	private String website;
+//	private TweetDTO tweetDTO;
 //	private Status status = Status.Logged_out;
 //    public Status getStatus() {
 //		return status;
@@ -31,9 +34,16 @@ public class User {
 //		this.status = status;
 //	}
 	//	private List<Integer> feedTweets;
+	
 	public Integer getId() {
 		return id;
 	}
+//	public TweetDTO getTweetDTO() {
+//		return tweetDTO;
+//	}
+//	public void setTweetDTO(TweetDTO tweetDTO) {
+//		this.tweetDTO = tweetDTO;
+//	}
 	public void setId(Integer id) {
 		this.id = id;
 	}

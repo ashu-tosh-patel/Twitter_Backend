@@ -12,4 +12,5 @@ public interface UserService {
 	public void updateUserProfile(UserDTO userDTO);
 	public UserDTO getUserDetails(String email);
 	public List<UserDTO> getAllUsersInfo();
+//	public UserDTO findIdIfExists(Integer id);
 }

@@ -28,6 +28,7 @@ public class UserDTO {
 	private String bio;
 	private String location;
 	private String website;
+	private List<TweetDTO> tweetDTOs;
 //	private Status status;
 //    public Status getStatus() {
 //		return status;
@@ -36,8 +37,15 @@ public class UserDTO {
 //		this.status = status;
 //	}
 	//	private List<Integer> feedTweets;
+	
 	public Integer getId() {
 		return id;
+	}
+	public List<TweetDTO> getTweetDTOs() {
+		return tweetDTOs;
+	}
+	public void setTweetDTOs(List<TweetDTO> tweetDTOs) {
+		this.tweetDTOs = tweetDTOs;
 	}
 	public void setId(Integer id) {
 		this.id = id;

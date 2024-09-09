@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 @PropertySource("classpath:ValidationMessages.properties")
@@ -16,9 +17,9 @@ public class UserApplication {
 	}
 //comment by sachin
 	
-//	@Bean
-//	@LoadBalanced
-//	public WebClient.Builder webClientBuilder(){
-//		return WebClient.builder();
-//	}
+	@Bean
+	@LoadBalanced
+	public WebClient.Builder webClientBuilder(){
+		return WebClient.builder();
+	}
 }
