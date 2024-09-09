@@ -17,20 +17,20 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public boolean findEmailIfExists(String email) {
 		Optional<User> obj = userRepository.findByEmail(email);
-		if(!obj.isEmpty()) {
+		if (!obj.isEmpty()) {
 			return true;
 		}
 		return false;
-				
+
 	}
-	
+
 	public Integer registerUser(UserDTO userDTO) {
 		User user = new User();
 		user.setBio(userDTO.getBio());
@@ -48,23 +48,22 @@ public class UserServiceImpl implements UserService{
 		User res = userRepository.save(user);
 		return res.getId();
 	}
-	
-	
-	public boolean checkCredentials(String email,String password){
+
+	public boolean checkCredentials(String email, String password) {
 		Optional<User> obj = userRepository.findByEmail(email);
-		if(obj.isEmpty()) {
+		if (obj.isEmpty()) {
 			return false;
 		}
 		// Check is email and password entered are correct
 		String emailDB = obj.get().getEmail();
 		String passwordDB = obj.get().getPassword();
-		if(emailDB.equals(email) && passwordDB.equals(password)) {
+		if (emailDB.equals(email) && passwordDB.equals(password)) {
 //			obj.get().setStatus(Status.Logged_in);
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void updateUserProfile(UserDTO userDTO) {
 		Optional<User> obj = userRepository.findByEmail(userDTO.getEmail());
 		obj.get().setBio(userDTO.getBio());
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService{
 		obj.get().setWebsite(userDTO.getWebsite());
 		return;
 	}
-	
+
 	public UserDTO getUserDetails(String email) {
 		Optional<User> obj = userRepository.findByEmail(email);
 		UserDTO userDTO = new UserDTO();
@@ -91,11 +90,11 @@ public class UserServiceImpl implements UserService{
 		userDTO.setWebsite(obj.get().getWebsite());
 		return userDTO;
 	}
-	
-	public List<UserDTO> getAllUsersInfo(){
+
+	public List<UserDTO> getAllUsersInfo() {
 		List<UserDTO> userDTO = new ArrayList<>();
 		List<User> user = userRepository.findAll();
-		for(int i = 0;i < user.size();i++) {
+		for (int i = 0; i < user.size(); i++) {
 			UserDTO obj = new UserDTO();
 			obj.setBio(user.get(i).getBio());
 			obj.setCoverPic(user.get(i).getCoverPic());
@@ -109,6 +108,28 @@ public class UserServiceImpl implements UserService{
 			obj.setWebsite(user.get(i).getWebsite());
 			userDTO.add(obj);
 		}
+		return userDTO;
+	}
+
+	@Override
+	public UserDTO getUserDetails(Integer userId) {
+		Optional<User> obj = userRepository.findById(userId);
+		if(!obj.isPresent()) {
+			UserDTO dum = new UserDTO();
+			dum.setBio("No user found");
+		}
+		UserDTO userDTO = new UserDTO();
+		userDTO.setBio(obj.get().getBio());
+		userDTO.setCoverPic(obj.get().getCoverPic());
+		userDTO.setEmail(obj.get().getEmail());
+		userDTO.setId(obj.get().getId());
+//		userDTO.setFeedTweets(obj.get().getFeedTweets());
+		userDTO.setLocation(obj.get().getLocation());
+		userDTO.setName(obj.get().getName());
+		userDTO.setPassword(obj.get().getPassword());
+		userDTO.setProfilePic(obj.get().getProfilePic());
+		userDTO.setUsername(obj.get().getUsername());
+		userDTO.setWebsite(obj.get().getWebsite());
 		return userDTO;
 	}
 }

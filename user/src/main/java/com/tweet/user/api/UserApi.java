@@ -37,85 +37,104 @@ import jakarta.validation.Valid;
 public class UserApi {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private Environment environment;
-	
+
 //	private WebClient webClient = WebClient.build();
 	@Autowired
 	private WebClient.Builder webClientBuilder;
-	
+
 //	User Registration
 	@PostMapping(value = "/userRegistration")
-	public ResponseEntity<String> userRegistration(@RequestBody @Valid UserDTO userDTO) throws UserException{
+	public ResponseEntity<String> userRegistration(@RequestBody @Valid UserDTO userDTO) throws UserException {
 		// Check if email already exists
 		boolean userExists = userService.findEmailIfExists(userDTO.getEmail());
-		if(userExists) {
+		if (userExists) {
 			throw new UserException("Service.USER_ALREADY_EXISTS");
 		}
 		Integer num = userService.registerUser(userDTO);
 		String msg = "You account has been successfully created : ";
 		String successMsg = msg + num.toString();
-		return new ResponseEntity<>(successMsg,HttpStatus.CREATED);
+		return new ResponseEntity<>(successMsg, HttpStatus.CREATED);
 	}
-	
+
 //	User Authentication
-	@PostMapping(value="/userAuthentication")
-	public ResponseEntity<String> userAuthentication(@RequestBody UserDTO userDTO) throws UserException{
+	@PostMapping(value = "/userAuthentication")
+	public ResponseEntity<String> userAuthentication(@RequestBody UserDTO userDTO) throws UserException {
 		String email = userDTO.getEmail();
 		String password = userDTO.getPassword();
-		boolean credentialsAreCorrect = userService.checkCredentials(email,password);
-		if(!credentialsAreCorrect) {
+		boolean credentialsAreCorrect = userService.checkCredentials(email, password);
+		if (!credentialsAreCorrect) {
 			throw new UserException("Service.INCORRECT_CREDENTIALS");
 		}
 		String successMsg = "Login successfull";
-		return new ResponseEntity<>(successMsg,HttpStatus.FOUND);
+		return new ResponseEntity<>(successMsg, HttpStatus.FOUND);
 	}
-	
+
 //	Updating User Profile
-	@PutMapping(value="/updateProfile")
-	public ResponseEntity<String> updateUserProfile(@RequestBody UserDTO userDTO){
-		//No verification since User can only change profile after being logged in
+	@PutMapping(value = "/updateProfile")
+	public ResponseEntity<String> updateUserProfile(@RequestBody UserDTO userDTO) {
+		// No verification since User can only change profile after being logged in
 		userService.updateUserProfile(userDTO);
 		String successMsg = "You have successfully updated your details";
-		return new ResponseEntity<>(successMsg,HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(successMsg, HttpStatus.ACCEPTED);
 	}
-	
+
 //	While clicking on view profile of any other user i should see their info
 //	Also able to see users tweets and retweets
 	// Not Complete Api Call Modifications needed
-	@GetMapping(value="/getUserDetails/{email}")
-	public ResponseEntity<UserDTO> getUserDetails(@Valid @PathVariable String email)throws UserException{
+	@GetMapping(value = "/getUserDetails/{email}")
+	public ResponseEntity<UserDTO> getUserDetails(@Valid @PathVariable String email) throws UserException {
 		boolean userExists = userService.findEmailIfExists(email);
-		if(!userExists) {
+		if (!userExists) {
 			throw new UserException("Service.USER_NOT_FOUND");
 		}
 		UserDTO userDTO = userService.getUserDetails(email);
 		// Fetch Tweets and related media of particular user
 		List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
-				.uri("http://localhost:8080/tweet-api/user/{userId}/tweet",userDTO.getId()).retrieve()
-				.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {}).block();
+				.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+				.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+				}).block();
 		userDTO.setTweetDTOs(tweetDTOs);
-		return new ResponseEntity<>(userDTO,HttpStatus.OK);
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
-	
-	@GetMapping(value="/getAllUsersDetails")
-	public ResponseEntity<List<UserDTO>> getAllUsersDetails(){
+
+	@GetMapping(value = "/getUser/{userId}")
+	public ResponseEntity<UserDTO> getUserDetails(@Valid @PathVariable Integer userId) throws UserException {
+//		boolean userExists = userService.findEmailIfExists(email);
+//		if(!userExists) {
+//			throw new UserException("Service.USER_NOT_FOUND");
+//		}
+		
+		UserDTO userDTO = userService.getUserDetails(userId);
+		// Fetch Tweets and related media of particular user
+		List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
+				.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+				.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+				}).block();
+		userDTO.setTweetDTOs(tweetDTOs);
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/getAllUsersDetails")
+	public ResponseEntity<List<UserDTO>> getAllUsersDetails() {
 		List<UserDTO> list = userService.getAllUsersInfo();
 		List<UserDTO> res = new ArrayList<>();
-		for(int i = 0;i < list.size();i++) {
+		for (int i = 0; i < list.size(); i++) {
 			String email = list.get(i).getEmail();
 			System.out.println(email);
 			UserDTO userDTO = userService.getUserDetails(email);
 //			System.out.println(userDTO);
 			// Fetch Tweets and related media of particular user
 			List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
-					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet",userDTO.getId()).retrieve()
-					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {}).block();
+					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+					}).block();
 //			System.out.println(tweetDTOs.toString());
 			userDTO.setTweetDTOs(tweetDTOs);
 			res.add(userDTO);
 		}
-		return new ResponseEntity<>(res,HttpStatus.OK);
+		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }
