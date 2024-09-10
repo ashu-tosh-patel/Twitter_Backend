@@ -52,16 +52,20 @@ public class TweetController {
 			MediaDTO mediaDTO = webBuilder.build().get()
 					.uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
 					.bodyToMono(MediaDTO.class).block();
-//		System.out.println(mediaDTO);
 			tweetDTOs.get(i).setMedia(mediaDTO);
-
 		}
 		return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "{userId}/tweet")
 	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO) {
-		return new ResponseEntity<>(ts.add(tweetDTO), HttpStatus.CREATED);
+		tweetDTO.setUserId(userId);
+		MediaDTO mediaDTO = tweetDTO.getMedia();
+		Integer addedTweetId = ts.add(tweetDTO);
+		mediaDTO.setTweetId(addedTweetId);
+		Integer mediaId = webBuilder.build().post().uri("http://localhost:8081/media-api/media").bodyValue(mediaDTO)
+				.retrieve().bodyToMono(Integer.class).block();
+		return new ResponseEntity<>(addedTweetId, HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "{userId}/tweet/{id}")

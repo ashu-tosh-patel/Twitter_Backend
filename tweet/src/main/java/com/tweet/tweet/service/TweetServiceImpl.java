@@ -60,11 +60,10 @@ public class TweetServiceImpl implements TweetService {
 
 	public List<TweetDTO> findByUserId(Integer userId) {
 		List<Tweet> tweets = tr.findByUserId(userId);
-//		List<Tweet> tweet = tweetOP.get();
 		List<TweetDTO> tweetDTOs = new ArrayList<>();
 		for (Tweet tweet : tweets) {
 			List<Mention> mentions = mr.findByTweetId(tweet.getId());
-			List<String> mentionedNames = mentions.stream().map((m) -> m.getUserName()).collect(Collectors.toList());
+			List<String> mentionedNames = mentions.stream().map(Mention::getUserName).collect(Collectors.toList());
 			List<Link> links = lr.findByTweetId(tweet.getId());
 			List<String> linkUrls = links.stream().map(Link::getUrl).collect(Collectors.toList());
 			List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
@@ -92,7 +91,6 @@ public class TweetServiceImpl implements TweetService {
 		Optional<Tweet> tweetOP = tr.findById(id);
 		Tweet tweet = tweetOP.get();
 		tweet.setId(tweetDTO.getId());
-//		tweet.setMediaLink(tweetDTO.getMediaLink());
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
 		return tr.save(tweet).getId();
@@ -100,11 +98,30 @@ public class TweetServiceImpl implements TweetService {
 
 	public Integer add(TweetDTO tweetDTO) {
 		Tweet tweet = new Tweet();
-		tweet.setId(tweetDTO.getId());
-//		tweet.setMediaLink(tweetDTO.getMediaLink());
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
 		Tweet saved = tr.save(tweet);
+		List<String> hashtags = tweetDTO.getHashtags();
+		for (String hashtag : hashtags) {
+			HashTag ht = new HashTag();
+			ht.setTag(hashtag);
+			ht.setTweetId(saved.getId());
+			htr.save(ht);
+		}
+		List<String> mentions = tweetDTO.getMentions();
+		for (String mention : mentions) {
+			Mention mn = new Mention();
+			mn.setUserName(mention);
+			mn.setTweetId(saved.getId());
+			mr.save(mn);
+		}
+		List<String> urls = tweetDTO.getUrls();
+		for(String url: urls) {
+			Link l = new Link();
+			l.setUrl(url);
+			l.setTweetId(saved.getId());
+			lr.save(l);
+		}
 		return saved.getId();
 	}
 }

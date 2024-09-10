@@ -22,7 +22,7 @@ public class MediaServiceImpl implements MediaService {
 		Optional<Media> mediaOP = mr.findByTweetId(tweetId);
 		if (!mediaOP.isPresent()) {
 			MediaDTO dum = new MediaDTO();
-			dum.setUrl("No media for this tweet");
+//			dum.setUrl("No media for this tweet");
 			return dum;
 		}
 		Media media = mediaOP.get();
