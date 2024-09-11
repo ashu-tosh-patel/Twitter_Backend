@@ -1,6 +1,5 @@
 package com.tweet.tweet.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.tweet.tweet.dto.MediaDTO;
 import com.tweet.tweet.dto.TweetDTO;
+import com.tweet.tweet.exception.TweetException;
 import com.tweet.tweet.service.TweetService;
 
 @RestController
@@ -45,7 +45,7 @@ public class TweetController {
 	}
 
 	@GetMapping(value = "{userId}/tweet")
-	public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) throws Exception {
+	public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) throws TweetException {
 		List<TweetDTO> tweetDTOs = ts.findByUserId(userId);
 
 		for (int i = 0; i < tweetDTOs.size(); i++) {
@@ -58,24 +58,25 @@ public class TweetController {
 	}
 
 	@PostMapping(value = "{userId}/tweet")
-	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO) throws Exception {
+	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO)
+			throws TweetException {
 		tweetDTO.setUserId(userId);
 		MediaDTO mediaDTO = tweetDTO.getMedia();
 		Integer addedTweetId = ts.add(tweetDTO);
 		mediaDTO.setTweetId(addedTweetId);
-		Integer mediaId = webBuilder.build().post().uri("http://localhost:8081/media-api/media").bodyValue(mediaDTO)
-				.retrieve().bodyToMono(Integer.class).block();
+		webBuilder.build().post().uri("http://localhost:8081/media-api/media").bodyValue(mediaDTO).retrieve()
+				.bodyToMono(Integer.class).block();
 		return new ResponseEntity<>(addedTweetId, HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "{userId}/tweet/{id}")
 	public ResponseEntity<Integer> update(@PathVariable Integer userId, @PathVariable Integer id,
-			@RequestBody TweetDTO tweetDTO) {
+			@RequestBody TweetDTO tweetDTO) throws TweetException {
 		return new ResponseEntity<>(ts.update(tweetDTO, id), HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping(value = "{userId}/tweet/{id}")
-	public ResponseEntity delete(@PathVariable Integer userId, @PathVariable Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer userId, @PathVariable Integer id) {
 		ts.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}

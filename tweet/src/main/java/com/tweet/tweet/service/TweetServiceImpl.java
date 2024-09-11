@@ -3,17 +3,16 @@ package com.tweet.tweet.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tweet.tweet.dto.MediaDTO;
 import com.tweet.tweet.dto.TweetDTO;
 import com.tweet.tweet.entity.HashTag;
 import com.tweet.tweet.entity.Link;
 import com.tweet.tweet.entity.Mention;
 import com.tweet.tweet.entity.Tweet;
+import com.tweet.tweet.exception.TweetException;
 import com.tweet.tweet.repository.HashTagRepository;
 import com.tweet.tweet.repository.LinkRepository;
 import com.tweet.tweet.repository.MentionRepository;
@@ -40,13 +39,12 @@ public class TweetServiceImpl implements TweetService {
 		for (Tweet tweet : tweets) {
 			TweetDTO tweetDTO = new TweetDTO();
 			List<Mention> mentions = mr.findByTweetId(tweet.getId());
-			List<String> mentionedNames = mentions.stream().map(Mention::getUserName).collect(Collectors.toList());
+			List<String> mentionedNames = mentions.stream().map(Mention::getUserName).toList();
 			List<Link> links = lr.findByTweetId(tweet.getId());
-			List<String> linkUrls = links.stream().map(Link::getUrl).collect(Collectors.toList());
+			List<String> linkUrls = links.stream().map(Link::getUrl).toList();
 			List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
-			List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
+			List<String> tags = hashtags.stream().map(HashTag::getTag).toList();
 			tweetDTO.setId(tweet.getId());
-//			tweetDTO.setMediaLink(tweet.getMediaLink());
 			tweetDTO.setMentions(mentionedNames);
 			tweetDTO.setMessage(tweet.getMessage());
 			tweetDTO.setUrls(linkUrls);
@@ -55,37 +53,33 @@ public class TweetServiceImpl implements TweetService {
 			tweetDTO.setCreatedAt(tweet.getCreatedAt());
 			tweetDTOs.add(tweetDTO);
 		}
-		// sorting tweets to display the latest one first
 		tweetDTOs.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
 		return tweetDTOs;
 	}
 
-	public List<TweetDTO> findByUserId(Integer userId) throws Exception {
+	public List<TweetDTO> findByUserId(Integer userId) throws TweetException {
 		List<Tweet> tweets = tr.findByUserId(userId);
-		if(tweets==null||tweets.isEmpty()) {
-			throw new Exception("This user does not have any tweet");
+		if (tweets == null || tweets.isEmpty()) {
+			throw new TweetException("This user does not have any tweet");
 		}
 		List<TweetDTO> tweetDTOs = new ArrayList<>();
 		for (Tweet tweet : tweets) {
 			List<Mention> mentions = mr.findByTweetId(tweet.getId());
-			List<String> mentionedNames = mentions.stream().map(Mention::getUserName).collect(Collectors.toList());
+			List<String> mentionedNames = mentions.stream().map(Mention::getUserName).toList();
 			List<Link> links = lr.findByTweetId(tweet.getId());
-			List<String> linkUrls = links.stream().map(Link::getUrl).collect(Collectors.toList());
+			List<String> linkUrls = links.stream().map(Link::getUrl).toList();
 			List<HashTag> hashtags = htr.findByTweetId(tweet.getId());
-			List<String> tags = hashtags.stream().map(HashTag::getTag).collect(Collectors.toList());
+			List<String> tags = hashtags.stream().map(HashTag::getTag).toList();
 			TweetDTO tweetDTO = new TweetDTO();
 			tweetDTO.setId(tweet.getId());
-//		tweetDTO.setMediaLink(tweet.getMediaLink());
 			tweetDTO.setMentions(mentionedNames);
 			tweetDTO.setMessage(tweet.getMessage());
 			tweetDTO.setUrls(linkUrls);
 			tweetDTO.setHashtags(tags);
 			tweetDTO.setUserId(tweet.getUserId());
-//		tweetDTO.setUserId(tweet.getUserId());
 			tweetDTO.setCreatedAt(tweet.getCreatedAt());
 			tweetDTOs.add(tweetDTO);
 		}
-		// sorting tweets to display the latest one first
 		tweetDTOs.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
 		return tweetDTOs;
 	}
@@ -94,8 +88,11 @@ public class TweetServiceImpl implements TweetService {
 		tr.deleteById(id);
 	}
 
-	public Integer update(TweetDTO tweetDTO, Integer id) {
+	public Integer update(TweetDTO tweetDTO, Integer id) throws TweetException {
 		Optional<Tweet> tweetOP = tr.findById(id);
+		if (!tweetOP.isPresent()) {
+			throw new TweetException("No tweet found with given id");
+		}
 		Tweet tweet = tweetOP.get();
 		tweet.setId(tweetDTO.getId());
 		tweet.setMessage(tweetDTO.getMessage());
@@ -103,9 +100,9 @@ public class TweetServiceImpl implements TweetService {
 		return tr.save(tweet).getId();
 	}
 
-	public Integer add(TweetDTO tweetDTO) throws Exception {
-		if(tweetDTO.getMessage().length()>280) {
-			throw new Exception("Tweet message length can't be greater than 280");
+	public Integer add(TweetDTO tweetDTO) throws TweetException {
+		if (tweetDTO.getMessage().length() > 280) {
+			throw new TweetException("Tweet message length can't be greater than 280");
 		}
 		Tweet tweet = new Tweet();
 		tweet.setMessage(tweetDTO.getMessage());
