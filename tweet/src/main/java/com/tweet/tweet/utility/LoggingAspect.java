@@ -1,6 +1,5 @@
 package com.tweet.tweet.utility;
 
-//import com.infy.exception.MovieException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.annotation.AfterThrowing;

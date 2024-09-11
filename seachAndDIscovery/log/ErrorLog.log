@@ -1313,3 +1313,4 @@ Caused by: org.hibernate.HibernateException: Unable to determine Dialect without
 11-Sep-2024 17:02:21 INFO - Exposing 1 endpoint beneath base path '/actuator'
 11-Sep-2024 17:02:21 INFO - Starting ProtocolHandler ["http-nio-8760"]
 11-Sep-2024 17:02:21 INFO - Tomcat started on port 8760 (http) with context path '/'
+11-Sep-2024 21:23:19 WARN - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h17m10s44ms116µs100ns).
