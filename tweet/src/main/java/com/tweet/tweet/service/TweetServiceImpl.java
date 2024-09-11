@@ -55,11 +55,16 @@ public class TweetServiceImpl implements TweetService {
 			tweetDTO.setCreatedAt(tweet.getCreatedAt());
 			tweetDTOs.add(tweetDTO);
 		}
+		// sorting tweets to display the latest one first
+		tweetDTOs.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
 		return tweetDTOs;
 	}
 
-	public List<TweetDTO> findByUserId(Integer userId) {
+	public List<TweetDTO> findByUserId(Integer userId) throws Exception {
 		List<Tweet> tweets = tr.findByUserId(userId);
+		if(tweets==null||tweets.isEmpty()) {
+			throw new Exception("This user does not have any tweet");
+		}
 		List<TweetDTO> tweetDTOs = new ArrayList<>();
 		for (Tweet tweet : tweets) {
 			List<Mention> mentions = mr.findByTweetId(tweet.getId());
@@ -80,6 +85,8 @@ public class TweetServiceImpl implements TweetService {
 			tweetDTO.setCreatedAt(tweet.getCreatedAt());
 			tweetDTOs.add(tweetDTO);
 		}
+		// sorting tweets to display the latest one first
+		tweetDTOs.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
 		return tweetDTOs;
 	}
 
@@ -96,7 +103,10 @@ public class TweetServiceImpl implements TweetService {
 		return tr.save(tweet).getId();
 	}
 
-	public Integer add(TweetDTO tweetDTO) {
+	public Integer add(TweetDTO tweetDTO) throws Exception {
+		if(tweetDTO.getMessage().length()>280) {
+			throw new Exception("Tweet message length can't be greater than 280");
+		}
 		Tweet tweet = new Tweet();
 		tweet.setMessage(tweetDTO.getMessage());
 		tweet.setUserId(tweetDTO.getUserId());
@@ -116,7 +126,7 @@ public class TweetServiceImpl implements TweetService {
 			mr.save(mn);
 		}
 		List<String> urls = tweetDTO.getUrls();
-		for(String url: urls) {
+		for (String url : urls) {
 			Link l = new Link();
 			l.setUrl(url);
 			l.setTweetId(saved.getId());

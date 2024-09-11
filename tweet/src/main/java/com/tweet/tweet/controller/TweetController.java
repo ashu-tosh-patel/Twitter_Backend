@@ -45,7 +45,7 @@ public class TweetController {
 	}
 
 	@GetMapping(value = "{userId}/tweet")
-	public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) {
+	public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) throws Exception {
 		List<TweetDTO> tweetDTOs = ts.findByUserId(userId);
 
 		for (int i = 0; i < tweetDTOs.size(); i++) {
@@ -58,7 +58,7 @@ public class TweetController {
 	}
 
 	@PostMapping(value = "{userId}/tweet")
-	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO) {
+	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO) throws Exception {
 		tweetDTO.setUserId(userId);
 		MediaDTO mediaDTO = tweetDTO.getMedia();
 		Integer addedTweetId = ts.add(tweetDTO);

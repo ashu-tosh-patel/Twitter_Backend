@@ -1282,3 +1282,9 @@ Caused by: org.hibernate.HibernateException: Unable to determine Dialect without
 10-Sep-2024 21:46:00 WARN - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h16m6s806ms369µs300ns).
 10-Sep-2024 23:32:03 WARN - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m11s758ms659µs300ns).
 11-Sep-2024 09:15:25 WARN - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9h40m2s249ms840µs).
+11-Sep-2024 14:15:01 WARN - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h25m3s684ms321µs500ns).
+11-Sep-2024 16:59:20 INFO - Application shutdown requested.
+11-Sep-2024 16:59:20 INFO - Stopping ProtocolHandler ["http-nio-8760"]
+11-Sep-2024 16:59:20 INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
+11-Sep-2024 16:59:20 INFO - HikariPool-1 - Shutdown initiated...
+11-Sep-2024 16:59:20 INFO - HikariPool-1 - Shutdown completed.

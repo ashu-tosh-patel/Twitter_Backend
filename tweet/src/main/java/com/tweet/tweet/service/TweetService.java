@@ -9,11 +9,11 @@ import com.tweet.tweet.entity.Tweet;
 public interface TweetService {
 	public List<TweetDTO> find();
 
-	public List<TweetDTO> findByUserId(Integer id);
+	public List<TweetDTO> findByUserId(Integer id) throws Exception;
 
 	public void deleteById(Integer id);
 
 	public Integer update(TweetDTO tweetDTO, Integer id);
 
-	public Integer add(TweetDTO tweetDTO);
+	public Integer add(TweetDTO tweetDTO) throws Exception;
 }

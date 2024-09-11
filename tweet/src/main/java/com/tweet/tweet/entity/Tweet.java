@@ -24,6 +24,10 @@ public class Tweet {
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
