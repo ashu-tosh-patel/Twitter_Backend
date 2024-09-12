@@ -110,6 +110,12 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", name=" + name + ", username=" + username + ", email=" + email + ", password="
+				+ password + ", profilePic=" + profilePic + ", coverPic=" + coverPic + ", bio=" + bio + ", location="
+				+ location + ", website=" + website + ", tweetDTOs=" + tweetDTOs + "]";
+	}
 	
 	
 	
