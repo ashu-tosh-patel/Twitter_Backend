@@ -41,7 +41,6 @@ public class UserApi {
 	@Autowired
 	private Environment environment;
 
-//	private WebClient webClient = WebClient.build();
 	@Autowired
 	private WebClient.Builder webClientBuilder;
 
@@ -106,13 +105,20 @@ public class UserApi {
 //		if(!userExists) {
 //			throw new UserException("Service.USER_NOT_FOUND");
 //		}
-		
+
 		UserDTO userDTO = userService.getUserDetails(userId);
 		// Fetch Tweets and related media of particular user
-		List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
-				.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
-				.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
-				}).block();
+
+		List<TweetDTO> tweetDTOs = new ArrayList<>();
+		try {
+
+			tweetDTOs = webClientBuilder.build().get()
+					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+					}).block();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		userDTO.setTweetDTOs(tweetDTOs);
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
@@ -124,15 +130,21 @@ public class UserApi {
 		System.out.println(list);
 		for (int i = 0; i < list.size(); i++) {
 			String email = list.get(i).getEmail();
-//			System.out.println(email);
 			UserDTO userDTO = userService.getUserDetails(email);
-//			System.out.println(userDTO);
-			// Fetch Tweets and related media of particular user
-			List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
-					.uri("http://localhost:8083/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
-					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
-					}).block();
-//			System.out.println(tweetDTOs.toString());
+//			List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
+//					.uri("http://localhost:8083/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+//					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+//					}).block();
+			List<TweetDTO> tweetDTOs = new ArrayList<>();
+			try {
+
+				tweetDTOs = webClientBuilder.build().get()
+						.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+						.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+						}).block();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			userDTO.setTweetDTOs(tweetDTOs);
 			res.add(userDTO);
 		}

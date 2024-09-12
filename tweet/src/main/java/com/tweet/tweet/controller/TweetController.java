@@ -22,7 +22,7 @@ import com.tweet.tweet.exception.TweetException;
 import com.tweet.tweet.service.TweetService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("localhost:4200")
 @RequestMapping(value = "/tweet-api/user")
 public class TweetController {
 
