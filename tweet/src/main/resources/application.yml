@@ -23,7 +23,7 @@ spring:
 
 
 server:
-  port: 8083
+  port: 8080
   
 
 #cirtuit breaker name in program should be same as instance name here

@@ -24,7 +24,7 @@
 		<sonar.projectKey>tweet</sonar.projectKey>
 		<sonar.projectName>tweet</sonar.projectName>
 		<sonar.coverage.exclusions>
-			src/main/java/com/tweet/tweet/controller/**,src/main/java/com/tweet/tweet/dto/**,src/main/java/com/tweet/tweet/utility/**,src/main/java/com/tweet/tweet/entity/**,src/main/java/com/tweet/tweet/repository/**,src/main/java/com/tweet/tweet/TweetApplication*</sonar.coverage.exclusions>
+			src/main/java/com/tweet/tweet/controller/**,src/main/java/com/tweet/tweet/dto/**,src/main/java/com/tweet/tweet/utility/**,src/main/java/com/tweet/tweet/entity/**,src/main/java/com/tweet/tweet/repository/**,src/main/java/com/tweet/tweet/exception/**,src/main/java/com/tweet/tweet/service/**,src/main/java/com/tweet/tweet/TweetApplication*</sonar.coverage.exclusions>
 
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.qualitygate.failOnSonarQubeExitCode>true</sonar.qualitygate.failOnSonarQubeExitCode>

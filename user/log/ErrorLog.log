@@ -1,0 +1,29 @@
+12-Sep-2024 14:37:49 INFO - HV000001: Hibernate Validator 8.0.1.Final
+12-Sep-2024 14:37:49 INFO - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+12-Sep-2024 14:37:49 INFO - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+12-Sep-2024 14:37:51 INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+12-Sep-2024 14:37:51 INFO - Finished Spring Data repository scanning in 297 ms. Found 1 JPA repository interface.
+12-Sep-2024 14:37:53 INFO - Tomcat initialized with port 8765 (http)
+12-Sep-2024 14:37:53 INFO - Initializing ProtocolHandler ["http-nio-8765"]
+12-Sep-2024 14:37:53 INFO - Starting service [Tomcat]
+12-Sep-2024 14:37:53 INFO - Starting Servlet engine: [Apache Tomcat/10.1.28]
+12-Sep-2024 14:37:53 INFO - Initializing Spring embedded WebApplicationContext
+12-Sep-2024 14:37:53 INFO - Root WebApplicationContext: initialization completed in 3870 ms
+12-Sep-2024 14:37:54 INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+12-Sep-2024 14:37:54 INFO - HHH000412: Hibernate ORM core version 6.5.2.Final
+12-Sep-2024 14:37:54 INFO - HHH000026: Second-level cache disabled
+12-Sep-2024 14:37:55 INFO - No LoadTimeWeaver setup: ignoring JPA class transformer
+12-Sep-2024 14:37:55 INFO - HikariPool-1 - Starting...
+12-Sep-2024 14:37:55 INFO - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7bcbe506
+12-Sep-2024 14:37:55 INFO - HikariPool-1 - Start completed.
+12-Sep-2024 14:37:57 INFO - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+12-Sep-2024 14:37:57 INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+12-Sep-2024 14:37:58 WARN - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+12-Sep-2024 14:37:59 WARN - Unable to start LiveReload server
+12-Sep-2024 14:37:59 INFO - Exposing 1 endpoint beneath base path '/actuator'
+12-Sep-2024 14:37:59 INFO - Starting ProtocolHandler ["http-nio-8765"]
+12-Sep-2024 14:37:59 INFO - Tomcat started on port 8765 (http) with context path '/'
+12-Sep-2024 14:38:00 INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
+12-Sep-2024 14:38:00 INFO - Initializing Servlet 'dispatcherServlet'
+12-Sep-2024 14:38:00 INFO - Completed initialization in 2 ms
+12-Sep-2024 16:11:08 WARN - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46m48s658ms614µs500ns).
