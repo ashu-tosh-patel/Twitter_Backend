@@ -106,13 +106,20 @@ public class UserApi {
 //		if(!userExists) {
 //			throw new UserException("Service.USER_NOT_FOUND");
 //		}
-		
+
 		UserDTO userDTO = userService.getUserDetails(userId);
 		// Fetch Tweets and related media of particular user
-		List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
-				.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
-				.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
-				}).block();
+
+		List<TweetDTO> tweetDTOs = new ArrayList<>();
+		try {
+
+			tweetDTOs = webClientBuilder.build().get()
+					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+					}).block();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		userDTO.setTweetDTOs(tweetDTOs);
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
@@ -127,10 +134,16 @@ public class UserApi {
 			UserDTO userDTO = userService.getUserDetails(email);
 //			System.out.println(userDTO);
 			// Fetch Tweets and related media of particular user
-			List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
-					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
-					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
-					}).block();
+			List<TweetDTO> tweetDTOs = new ArrayList<>();
+			try {
+
+				tweetDTOs = webClientBuilder.build().get()
+						.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+						.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+						}).block();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 //			System.out.println(tweetDTOs.toString());
 			userDTO.setTweetDTOs(tweetDTOs);
 			res.add(userDTO);
