@@ -1,0 +1,29 @@
+12-Sep-2024 16:10:56 WARN - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=46m48s657ms489µs900ns).
+13-Sep-2024 09:40:18 INFO - HV000001: Hibernate Validator 8.0.1.Final
+13-Sep-2024 09:40:18 INFO - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+13-Sep-2024 09:40:18 INFO - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+13-Sep-2024 09:40:20 INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13-Sep-2024 09:40:20 INFO - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+13-Sep-2024 09:40:21 INFO - Tomcat initialized with port 8760 (http)
+13-Sep-2024 09:40:21 INFO - Initializing ProtocolHandler ["http-nio-8760"]
+13-Sep-2024 09:40:21 INFO - Starting service [Tomcat]
+13-Sep-2024 09:40:21 INFO - Starting Servlet engine: [Apache Tomcat/10.1.28]
+13-Sep-2024 09:40:21 INFO - Initializing Spring embedded WebApplicationContext
+13-Sep-2024 09:40:21 INFO - Root WebApplicationContext: initialization completed in 3013 ms
+13-Sep-2024 09:40:22 INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+13-Sep-2024 09:40:22 INFO - HHH000412: Hibernate ORM core version 6.5.2.Final
+13-Sep-2024 09:40:22 INFO - HHH000026: Second-level cache disabled
+13-Sep-2024 09:40:22 INFO - No LoadTimeWeaver setup: ignoring JPA class transformer
+13-Sep-2024 09:40:22 INFO - HikariPool-1 - Starting...
+13-Sep-2024 09:40:23 INFO - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@500c3e1d
+13-Sep-2024 09:40:23 INFO - HikariPool-1 - Start completed.
+13-Sep-2024 09:40:24 INFO - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13-Sep-2024 09:40:24 INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13-Sep-2024 09:40:25 WARN - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+13-Sep-2024 09:40:26 WARN - Unable to start LiveReload server
+13-Sep-2024 09:40:26 INFO - Exposing 1 endpoint beneath base path '/actuator'
+13-Sep-2024 09:40:26 INFO - Starting ProtocolHandler ["http-nio-8760"]
+13-Sep-2024 09:40:26 INFO - Tomcat started on port 8760 (http) with context path '/'
+13-Sep-2024 09:40:27 INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
+13-Sep-2024 09:40:27 INFO - Initializing Servlet 'dispatcherServlet'
+13-Sep-2024 09:40:27 INFO - Completed initialization in 0 ms

@@ -264,6 +264,8 @@
 						<exclude>**/com/tweet/tweet/entity/**</exclude>
 						<exclude>**/com/tweet/tweet/repository/**</exclude>
 						<exclude>**/com/tweet/tweet/TweetApplication*</exclude>
+						<exclude>**/com/tweet/tweet/exception/**</exclude>
+						<exclude>**/com/tweet/tweet/service/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
