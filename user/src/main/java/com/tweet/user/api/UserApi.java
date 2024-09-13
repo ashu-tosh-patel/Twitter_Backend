@@ -41,7 +41,6 @@ public class UserApi {
 	@Autowired
 	private Environment environment;
 
-//	private WebClient webClient = WebClient.build();
 	@Autowired
 	private WebClient.Builder webClientBuilder;
 
@@ -128,12 +127,14 @@ public class UserApi {
 	public ResponseEntity<List<UserDTO>> getAllUsersDetails() {
 		List<UserDTO> list = userService.getAllUsersInfo();
 		List<UserDTO> res = new ArrayList<>();
+		System.out.println(list);
 		for (int i = 0; i < list.size(); i++) {
 			String email = list.get(i).getEmail();
-			System.out.println(email);
 			UserDTO userDTO = userService.getUserDetails(email);
-//			System.out.println(userDTO);
-			// Fetch Tweets and related media of particular user
+//			List<TweetDTO> tweetDTOs = webClientBuilder.build().get()
+//					.uri("http://localhost:8083/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
+//					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
+//					}).block();
 			List<TweetDTO> tweetDTOs = new ArrayList<>();
 			try {
 
@@ -144,7 +145,6 @@ public class UserApi {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-//			System.out.println(tweetDTOs.toString());
 			userDTO.setTweetDTOs(tweetDTOs);
 			res.add(userDTO);
 		}
