@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.tweet.followingAndFollower.entity.FollowingAndFollower;
 import com.tweet.followingAndFollower.repository.FollowingAndFollowerRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class FollowingAndFollowerServiceImpl implements FollowingAndFollowerService {
 
@@ -35,5 +37,11 @@ public class FollowingAndFollowerServiceImpl implements FollowingAndFollowerServ
 		ff.setFollowingId(followedToId);
 		FollowingAndFollower saved = ffr.save(ff);
 		return saved.getId();
+	}
+
+	@Transactional
+	@Override
+	public void unfollow(Integer currentUserId, Integer targetUserId) {
+		ffr.deleteByFollowerIdAndFollowingId(currentUserId, targetUserId);
 	}
 }

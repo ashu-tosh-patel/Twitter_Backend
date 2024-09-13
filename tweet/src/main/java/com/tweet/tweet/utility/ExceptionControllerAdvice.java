@@ -20,9 +20,6 @@ import jakarta.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
-	@Autowired
-	private Environment environment;
-
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorMessage> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
@@ -50,7 +47,7 @@ public class ExceptionControllerAdvice {
 
 		ErrorMessage error = new ErrorMessage();
 		error.setErrCode(HttpStatus.BAD_REQUEST.value());
-		error.setErrMessage(environment.getProperty(exception.getMessage()));
+		error.setErrMessage(exception.getMessage());
 		error.setTimeStamp(LocalDateTime.now().toString());
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}

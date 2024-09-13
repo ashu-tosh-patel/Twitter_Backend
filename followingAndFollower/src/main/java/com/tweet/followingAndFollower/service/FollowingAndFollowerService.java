@@ -8,4 +8,6 @@ public interface FollowingAndFollowerService {
 	List<Integer> getFollowing(Integer followerId);
 
 	Integer follow(Integer followedById, Integer followedToId);
+
+	void unfollow(Integer currentUserId, Integer targetUserId);
 }
