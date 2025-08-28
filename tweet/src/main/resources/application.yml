@@ -4,9 +4,9 @@ spring:
     url: jdbc:mysql://localhost/TWEETDB
     username: root
     password: root
-  jpa: 
-    hibernate:
-      ddl-auto: update
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
   application:
     name: TWEET
   cloud:

@@ -20,5 +20,4 @@ public class SeachAndDIscoveryApplication {
 	WebClient.Builder webClientBuilder() {
 		return WebClient.builder();
 	}
-
 }

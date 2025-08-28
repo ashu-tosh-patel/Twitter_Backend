@@ -10,8 +10,8 @@
 	<groupId>com.tweet</groupId>
 	<artifactId>gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>gateway</name>
-	<description>Media microservice</description>
+	<name>Gateway</name>
+	<description>Microservice for Gateway</description>
 	<url/>
 	<licenses>
 		<license/>
