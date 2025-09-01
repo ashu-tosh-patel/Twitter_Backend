@@ -4,16 +4,18 @@ spring:
     url: jdbc:mysql://localhost/TWEETDB
     username: root
     password: root
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
+  jpa:
+    hibernate:
+      ddl-auto: none
   application:
     name: TWEET
   cloud:
     consul:
-      host: localhost
+      enabled: false
       discovery:
-        hostname: localhost
+        enabled: false
+      config:
+        enabled: false
 #      config:
 #        enabled: true
 #        prefix: config
@@ -36,11 +38,3 @@ server:
 #        ringBufferSizeInHalfOpenState: 3
 #        waitDurationInOpenState: 30s
 #        automaticTransitionFromOpenToHalfOpenEnabled: true
-
-#PlayerService: 
-#  PLAYER_AGE: Player didn't met the age limit.   
-#  SPORT_NOT_ABLE_TO_REGISTER: Player Not Able To Register Due to Phone No.
-#  NOT_FOUND: Invalid RegisterId.
-#
-#API: 
-#  REGISTRATION_SUCCESS: Player registered successfully with id

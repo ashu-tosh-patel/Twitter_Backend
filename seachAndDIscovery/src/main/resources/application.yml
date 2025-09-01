@@ -1,25 +1,33 @@
 server:
   port: 8760
-spring: 
+
+spring:
   application:
-    name: SearchMS
+    name: search-ms
   cloud:
     consul:
       host: localhost
       discovery:
         hostname: localhost
-  datasource: 
-    driverClassName: com.mysql.cj.jdbc.Driver 
-    url: jdbc:mysql://localhost/SEARCHDB
+      enabled: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/searchdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: root      
-  jpa: 
-    hibernate.ddl-auto: update
-    
-    
-General: 
-  EXCEPTION_MESSAGE: Request could not be processed due to some issue. Please try again!
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
 
-Service: 
-  NO_USERS_FOUND : No User Found
-  NO_TWEETS_FOUND : No Tweets Found
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Custom Messages
+general:
+  exception-message: "Request could not be processed due to some issue. Please try again!"
+
+service:
+  no-users-found: "No User Found"
+  no-tweets-found: "No Tweets Found"

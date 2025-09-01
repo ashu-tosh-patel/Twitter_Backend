@@ -5,9 +5,9 @@ spring:
     name: UserMS
   cloud:
     consul:
-      host: localhost
+      enabled: false
       discovery:
-        hostname: localhost  
+        enabled: false
   datasource: 
     driverClassName: com.mysql.cj.jdbc.Driver 
     url: jdbc:mysql://localhost/userMS_db

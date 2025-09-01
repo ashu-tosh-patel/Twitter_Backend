@@ -1,46 +1,44 @@
-spring: 
-  datasource: 
-    driverClassName: com.mysql.cj.jdbc.Driver 
-    url: jdbc:mysql://localhost/TWEET_FOLLOWING_AND_FOLLOWER
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/TWEET_FOLLOWING_AND_FOLLOWER?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: root
-  jpa: 
+  jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   application:
-    name: FOLLOWINGANDFOLLOWER
+    name: following-and-follower
   cloud:
     consul:
-      host: localhost
+      enabled: false    # Keep false if Consul is not running
       discovery:
-        hostname: localhost
-#      config:
-#        enabled: true
-#        prefix: config
-#        defaultContext: application
-#        data-key: data
-#        profileSeperator: '::'
-#        format: YAML
-
+        enabled: false
 
 server:
   port: 8082
-  
 
-#cirtuit breaker name in program should be same as instance name here
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      playerService:
-#        failureRateThreshold: 50
-#        ringBufferSizeInHalfOpenState: 3
-#        waitDurationInOpenState: 30s
-#        automaticTransitionFromOpenToHalfOpenEnabled: true
+# Resilience4j Circuit Breaker Config
+resilience4j:
+  circuitbreaker:
+    instances:
+      player-service:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        sliding-window-size: 10
+        wait-duration-in-open-state: 30s
+        automatic-transition-from-open-to-half-open-enabled: true
 
-PlayerService: 
-  PLAYER_AGE: Player didn't met the age limit.   
-  SPORT_NOT_ABLE_TO_REGISTER: Player Not Able To Register Due to Phone No.
-  NOT_FOUND: Invalid RegisterId.
+# Custom Messages
+player-service:
+  messages:
+    player-age: "Player didn't meet the age limit."
+    sport-not-able-to-register: "Player Not Able To Register Due to Phone No."
+    not-found: "Invalid RegisterId."
 
-API: 
-  REGISTRATION_SUCCESS: Player registered successfully with id
+api:
+  registration-success: "Player registered successfully with id"

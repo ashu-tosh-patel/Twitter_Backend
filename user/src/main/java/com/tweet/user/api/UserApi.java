@@ -29,6 +29,7 @@ import com.tweet.user.exception.UserException;
 import com.tweet.user.service.UserService;
 
 import jakarta.validation.Valid;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -100,28 +101,35 @@ public class UserApi {
 	}
 
 	@GetMapping(value = "/getUser/{userId}")
-	public ResponseEntity<UserDTO> getUserDetails(@Valid @PathVariable Integer userId) throws UserException {
-//		boolean userExists = userService.findEmailIfExists(email);
-//		if(!userExists) {
-//			throw new UserException("Service.USER_NOT_FOUND");
-//		}
+	public Mono<ResponseEntity<UserDTO>> getUserDetails(@Valid @PathVariable Integer userId) {
+		System.out.println("Get user called with id: " + userId);
 
-		UserDTO userDTO = userService.getUserDetails(userId);
-		// Fetch Tweets and related media of particular user
+		return Mono.fromCallable(() -> userService.getUserDetails(userId)) // Wrap your existing service call
+				.flatMap(userDTO -> {
+					System.out.println("User ID from userDTO: " + userDTO.getId());
+					String url = "http://localhost:8080/tweet-api/user/" + userDTO.getId() + "/tweet";
+					System.out.println("Attempting to call URL: " + url);
 
-		List<TweetDTO> tweetDTOs = new ArrayList<>();
-		try {
-
-			tweetDTOs = webClientBuilder.build().get()
-					.uri("http://localhost:8080/tweet-api/user/{userId}/tweet", userDTO.getId()).retrieve()
-					.bodyToMono(new ParameterizedTypeReference<List<TweetDTO>>() {
-					}).block();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		userDTO.setTweetDTOs(tweetDTOs);
-		return new ResponseEntity<>(userDTO, HttpStatus.OK);
+					return webClientBuilder.build()
+							.get()
+							.uri(url)
+							.retrieve()
+							.bodyToFlux(TweetDTO.class) // Use Flux since it returns a list
+							.collectList() // Collect Flux<TweetDTO> into List<TweetDTO>
+							.doOnError(error -> {
+								System.err.println("Error occurred while calling tweet service:");
+								System.err.println("Error type: " + error.getClass().getName());
+								System.err.println("Error message: " + error.getMessage());
+								error.printStackTrace();
+							})
+							.defaultIfEmpty(new ArrayList<>()) // Return empty list on error
+							.map(tweets -> {
+								userDTO.setTweetDTOs(tweets);
+								return ResponseEntity.ok(userDTO);
+							});
+				});
 	}
+
 
 	@GetMapping(value = "/getAllUsersDetails")
 	public ResponseEntity<List<UserDTO>> getAllUsersDetails() {
