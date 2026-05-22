@@ -1,33 +1,99 @@
-gateway/HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Git ignore for a multi-module Spring Boot (Maven) project
 
-### STS ###
+# Maven / Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.log
+hs_err_pid*
+
+# Keep maven wrapper jar tracked, ignore wrapper files otherwise
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse / STS
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# IntelliJ
+.idea/
 *.iml
+*.iws
 *.ipr
+out/
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
-build/
+.nb-gradle/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+logs/
+*.log
+log/
+/ErrorLog.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+
+# Build directories in multi-module projects
+**/target/
+**/build/
+!**/src/main/**/target/
+!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Ignore generated jar files in module targets
+**/*.jar
+**/*.war
+
+# Spring Boot specific
+/.spring-boot-devtools/
+
+# Configuration / environment files that may contain secrets
+.env
+.env.*
+application-*.yml
+application-*.properties
+secrets.properties
+credentials/
+
+# IDE and OS files
+Thumbs.db
+*.log
+
+# Node (if frontend present)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Keep HELP.md files that were explicitly added earlier if needed
+# (if you want to track gateway/HELP.md etc, remove these lines)
+# gateway/HELP.md
+# followingAndFollower/HELP.md
+# media/HELP.md
+# seachAndDIscovery/HELP.md
+# tweet/HELP.md
+# user/HELP.md
