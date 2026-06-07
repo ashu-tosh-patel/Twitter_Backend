@@ -13,35 +13,35 @@ import jakarta.transaction.Transactional;
 @Service
 public class FollowingAndFollowerServiceImpl implements FollowingAndFollowerService {
 
-	@Autowired
-	FollowingAndFollowerRepository ffr;
+    @Autowired
+    FollowingAndFollowerRepository ffr;
 
-	@Override
-	public List<Integer> getFollowers(Integer userId) {
-		List<FollowingAndFollower> list = ffr.findByFollowingId(userId);
-		List<Integer> followers = list.stream().map(FollowingAndFollower::getFollowerId).toList();
-		return followers;
-	}
+    @Override
+    public List<Integer> getFollowers(Integer userId) {
+        List<FollowingAndFollower> list = ffr.findByFollowingId(userId);
+        List<Integer> followers = list.stream().map(FollowingAndFollower::getFollowerId).toList();
+        return followers;
+    }
 
-	@Override
-	public List<Integer> getFollowing(Integer userId) {
-		List<FollowingAndFollower> list = ffr.findByFollowerId(userId);
-		List<Integer> followings = list.stream().map(FollowingAndFollower::getFollowingId).toList();
-		return followings;
-	}
+    @Override
+    public List<Integer> getFollowing(Integer userId) {
+        List<FollowingAndFollower> list = ffr.findByFollowerId(userId);
+        List<Integer> followings = list.stream().map(FollowingAndFollower::getFollowingId).toList();
+        return followings;
+    }
 
-	@Override
-	public Integer follow(Integer followedById, Integer followedToId) {
-		FollowingAndFollower ff = new FollowingAndFollower();
-		ff.setFollowerId(followedById);
-		ff.setFollowingId(followedToId);
-		FollowingAndFollower saved = ffr.save(ff);
-		return saved.getId();
-	}
+    @Override
+    public Integer follow(Integer followedById, Integer followedToId) {
+        FollowingAndFollower ff = new FollowingAndFollower();
+        ff.setFollowerId(followedById);
+        ff.setFollowingId(followedToId);
+        FollowingAndFollower saved = ffr.save(ff);
+        return saved.getId();
+    }
 
-	@Transactional
-	@Override
-	public void unfollow(Integer currentUserId, Integer targetUserId) {
-		ffr.deleteByFollowerIdAndFollowingId(currentUserId, targetUserId);
-	}
+    @Transactional
+    @Override
+    public void unfollow(Integer currentUserId, Integer targetUserId) {
+        ffr.deleteByFollowerIdAndFollowingId(currentUserId, targetUserId);
+    }
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-
 import com.tweet.tweet.dto.MediaDTO;
 import com.tweet.tweet.dto.TweetDTO;
 import com.tweet.tweet.exception.TweetException;
@@ -26,58 +25,58 @@ import com.tweet.tweet.service.TweetService;
 @RequestMapping(value = "/tweet-api/user")
 public class TweetController {
 
-	@Autowired
-	private TweetService ts;
+    @Autowired
+    private TweetService ts;
 
-	@Autowired
-	private WebClient.Builder webBuilder;
+    @Autowired
+    private WebClient.Builder webBuilder;
 
-	@GetMapping(value = "/tweet")
-	public ResponseEntity<List<TweetDTO>> getAllTweets() {
-		List<TweetDTO> tweetDTOs = ts.find();
-		for (int i = 0; i < tweetDTOs.size(); i++) {
-			MediaDTO mediaDTO = webBuilder.build().get()
-					.uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
-					.bodyToMono(MediaDTO.class).block();
-			tweetDTOs.get(i).setMedia(mediaDTO);
-		}
-		return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
-	}
+    @GetMapping(value = "/tweet")
+    public ResponseEntity<List<TweetDTO>> getAllTweets() {
+        List<TweetDTO> tweetDTOs = ts.find();
+        for (int i = 0; i < tweetDTOs.size(); i++) {
+            MediaDTO mediaDTO = webBuilder.build().get()
+                    .uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
+                    .bodyToMono(MediaDTO.class).block();
+            tweetDTOs.get(i).setMedia(mediaDTO);
+        }
+        return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
+    }
 
-	@GetMapping(value = "{userId}/tweet")
-	public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) throws TweetException {
-		List<TweetDTO> tweetDTOs = ts.findByUserId(userId);
+    @GetMapping(value = "{userId}/tweet")
+    public ResponseEntity<List<TweetDTO>> getByUserId(@PathVariable Integer userId) throws TweetException {
+        List<TweetDTO> tweetDTOs = ts.findByUserId(userId);
 
-		for (int i = 0; i < tweetDTOs.size(); i++) {
-			MediaDTO mediaDTO = webBuilder.build().get()
-					.uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
-					.bodyToMono(MediaDTO.class).block();
-			tweetDTOs.get(i).setMedia(mediaDTO);
-		}
-		return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
-	}
+        for (int i = 0; i < tweetDTOs.size(); i++) {
+            MediaDTO mediaDTO = webBuilder.build().get()
+                    .uri("http://localhost:8081/media-api/media/" + tweetDTOs.get(i).getId()).retrieve()
+                    .bodyToMono(MediaDTO.class).block();
+            tweetDTOs.get(i).setMedia(mediaDTO);
+        }
+        return new ResponseEntity<>(tweetDTOs, HttpStatus.OK);
+    }
 
-	@PostMapping(value = "{userId}/tweet")
-	public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO)
-			throws TweetException {
-		tweetDTO.setUserId(userId);
-		MediaDTO mediaDTO = tweetDTO.getMedia();
-		Integer addedTweetId = ts.add(tweetDTO);
-		mediaDTO.setTweetId(addedTweetId);
-		webBuilder.build().post().uri("http://localhost:8081/media-api/media").bodyValue(mediaDTO).retrieve()
-				.bodyToMono(Integer.class).block();
-		return new ResponseEntity<>(addedTweetId, HttpStatus.CREATED);
-	}
+    @PostMapping(value = "{userId}/tweet")
+    public ResponseEntity<Integer> add(@PathVariable Integer userId, @RequestBody TweetDTO tweetDTO)
+            throws TweetException {
+        tweetDTO.setUserId(userId);
+        MediaDTO mediaDTO = tweetDTO.getMedia();
+        Integer addedTweetId = ts.add(tweetDTO);
+        mediaDTO.setTweetId(addedTweetId);
+        webBuilder.build().post().uri("http://localhost:8081/media-api/media").bodyValue(mediaDTO).retrieve()
+                .bodyToMono(Integer.class).block();
+        return new ResponseEntity<>(addedTweetId, HttpStatus.CREATED);
+    }
 
-	@PutMapping(value = "{userId}/tweet/{id}")
-	public ResponseEntity<Integer> update(@PathVariable Integer userId, @PathVariable Integer id,
-			@RequestBody TweetDTO tweetDTO) throws TweetException {
-		return new ResponseEntity<>(ts.update(tweetDTO, id), HttpStatus.ACCEPTED);
-	}
+    @PutMapping(value = "{userId}/tweet/{id}")
+    public ResponseEntity<Integer> update(@PathVariable Integer userId, @PathVariable Integer id,
+                                          @RequestBody TweetDTO tweetDTO) throws TweetException {
+        return new ResponseEntity<>(ts.update(tweetDTO, id), HttpStatus.ACCEPTED);
+    }
 
-	@DeleteMapping(value = "{userId}/tweet/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer userId, @PathVariable Integer id) {
-		ts.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
-	}
+    @DeleteMapping(value = "{userId}/tweet/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer userId, @PathVariable Integer id) {
+        ts.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }

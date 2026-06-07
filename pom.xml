@@ -13,7 +13,7 @@
     <modules>
         <module>user</module>
         <module>tweet</module>
-        <module>seachAndDIscovery</module>
+        <module>searchAndDiscovery</module>
         <module>media</module>
         <module>gateway</module>
         <module>followingAndFollower</module>

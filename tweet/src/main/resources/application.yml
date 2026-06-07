@@ -1,6 +1,6 @@
-spring: 
-  datasource: 
-    driverClassName: com.mysql.cj.jdbc.Driver 
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost/TWEETDB
     username: root
     password: root
@@ -16,25 +16,6 @@ spring:
         enabled: false
       config:
         enabled: false
-#      config:
-#        enabled: true
-#        prefix: config
-#        defaultContext: application
-#        data-key: data
-#        profileSeperator: '::'
-#        format: YAML
-
 
 server:
   port: 8080
-  
-
-#cirtuit breaker name in program should be same as instance name here
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      playerService:
-#        failureRateThreshold: 50
-#        ringBufferSizeInHalfOpenState: 3
-#        waitDurationInOpenState: 30s
-#        automaticTransitionFromOpenToHalfOpenEnabled: true
