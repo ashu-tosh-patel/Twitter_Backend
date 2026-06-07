@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/TWEET_FOLLOWING_AND_FOLLOWER?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/TWEET_FOLLOWING_AND_FOLLOWER
     username: root
     password: root
   jpa:
@@ -32,13 +32,3 @@ resilience4j:
         sliding-window-size: 10
         wait-duration-in-open-state: 30s
         automatic-transition-from-open-to-half-open-enabled: true
-
-# Custom Messages
-player-service:
-  messages:
-    player-age: "Player didn't meet the age limit."
-    sport-not-able-to-register: "Player Not Able To Register Due to Phone No."
-    not-found: "Invalid RegisterId."
-
-api:
-  registration-success: "Player registered successfully with id"
